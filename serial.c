@@ -1,10 +1,12 @@
 #include <avr/io.h>
-
 #include <stdio.h>
-
 #include "serial.h"
+#include "button.h"
 
 static FILE uart_stdout = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+
+char pushed[20] = "pushed\r\n";
+char released[20] = "released\r\n";
 
 void uart_init(void) {
 	UBRR0H = (unsigned char)(UBRR >> 8);
@@ -32,3 +34,17 @@ char uart_getchar(void) {
 	return UDR0;
 }
 
+void uart_putstr(const char* str) {
+	for (int i=0;str[i]!='\0';i++) {
+		uart_putchar(str[i], NULL);
+	}
+}
+
+void uart_buttonState() {
+	if (BUTTON_PRESSED) {
+		uart_putstr(pushed);
+	}
+	if (!(BUTTON_PRESSED)) {
+		uart_putstr(released);
+	}
+}

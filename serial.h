@@ -10,5 +10,9 @@ int uart_putchar(char chr, FILE *stream);
 
 char uart_getchar(void);
 
+void uart_putstr(const char* str);
+
+void uart_buttonState(void);
+
 #endif
 

@@ -2,7 +2,7 @@
 #include "led.h"
 
 void LED_init() {
-	// ...
+	DDRD |= (1 << PORTD6);
 }
 
 uint8_t simple_ramp() {
